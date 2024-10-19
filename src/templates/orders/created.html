@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+
+
+{% block title %}
+    Order
+{% endblock title %}
+    
+
+
+
+
+{% block content %}
+
+<br><br><br>
+<h2 class="text-center">Checkout</h2>
+
+<div class="container justify-content-center">
+    your order 
+
+    <ul>
+      
+        {% for item in cart  %}
+        <li>
+        {{item.quantity}}x {{item.product.name}}, 
+        <span>${{item.total_price}}</span>
+        </li>
+            
+        {% endfor %}
+            
+    </ul>
+   
+   {% if success %}
+   <div class="alert alert-success" role="alert">
+    Your Order Has been successfuly. We sent an Email 
+    <b>Order-ID:</b>  {{order.order_id}} </div>
+   
+    
+   {% else %}
+   <p >Toatal: ${{cart.get_total_price}}</p>
+   {% endif %}
+    
+
+
+</div>
+    <br>
+    <div class="container justify-content-center">
+    <form method="post">
+        {% csrf_token %}
+        {{form|crispy}}
+        <p><input type="submit" value="Place Order" class="btn btn-primary"></p>
+    </form>
+</div>
+
+<style>
+    .x{
+        color: blue;
+    }
+</style>
+{% endblock content %}
+    
